@@ -1,4 +1,4 @@
-def get_formatted_string(n:int)->str:
+def character_transform(n:int)->str:
     """generate string by combining two alphabets to the next coming alphabet until we reach Z 
         e.g, n=5 means AAAAA -> BBA -> CA
     Args:
@@ -7,13 +7,13 @@ def get_formatted_string(n:int)->str:
     Returns:
         str: [description]
 
-    >>> get_formatted_string(67108876)
+    >>> character_transform(67108876)
     'ZZDC'
-    >>> get_formatted_string(19)
+    >>> character_transform(19)
     'EBA'
-    >>> get_formatted_string(11)
+    >>> character_transform(11)
     'DBA'
-    >>> get_formatted_string(8)
+    >>> character_transform(8)
     'D'
     """
     op = []
