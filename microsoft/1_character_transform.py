@@ -5,7 +5,7 @@ def character_transform(n:int)->str:
         n (int): number of A's present in a string
 
     Returns:
-        str: [description]
+        str: returns transformed character string
 
     >>> character_transform(67108876)
     'ZZDC'
