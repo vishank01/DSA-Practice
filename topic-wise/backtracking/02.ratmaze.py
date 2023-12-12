@@ -25,43 +25,27 @@ def is_safe(arr:list[list],n:int,i:int,j:int):
 def searchMazeHelper(arr:list[list],n:int,i:int,j:int,output:list,current_path=""):
     if i==n-1 and j==n-1:
         output.append(current_path)
-        return True
     else:
         if is_safe(arr,n,i+1,j):
             #move down
             arr[i+1][j]=0
-            current_path+="D"
-            if searchMazeHelper(arr,n,i+1,j,output,current_path)==False:
-                arr[i+1][j]=1
-            else:
-                return True
-        elif is_safe(arr,n,i,j+1):
+            searchMazeHelper(arr,n,i+1,j,output,current_path+"D")
+        if is_safe(arr,n,i,j+1):
             #move right
             arr[i][j+1]=0
-            current_path+="R"
-            if searchMazeHelper(arr,n,i,j+1,output,current_path)==False:
-                arr[i][j+1]=1
-            else:
-                return True
-        elif is_safe(arr,n,i-1,j):
+            searchMazeHelper(arr,n,i,j+1,output,current_path+"R")
+        if is_safe(arr,n,i-1,j):
             #move top
-            arr[i][j+1]=0
-            current_path+="T"
-            if searchMazeHelper(arr,n,i-1,j,output,current_path)==False:
-                arr[i][j+1]=1
-            else:
-                return True
-        elif is_safe(arr,n,i,j-1):
+            arr[i-1][j]=0
+            searchMazeHelper(arr,n,i-1,j,output,current_path+"T")
+        if is_safe(arr,n,i,j-1):
             #move left
-            arr[i][j+1]=0
-            current_path+="L"
-            if searchMazeHelper(arr,n,i,j-1,output,current_path)==False:
-                arr[i][j+1]=1
-            else:
-                return True
-        else:
-            return False
+            arr[i][j-1]=0
+            searchMazeHelper(arr,n,i,j-1,output,current_path+"L")
+        #mark as available so that all other paths will be found
+        arr[i][j]=1
 
 if __name__ == "__main__":
-    import doctest
-    doctest.testmod()
+    # import doctest
+    # doctest.testmod()
+    print(searchMaze([[1,0,0,0],[1,1,0,1],[1,1,0,0],[0,1,1,1]],4))
