@@ -1,17 +1,15 @@
 """
+    Algorithm:
+        >   Place a queen arbitrarily at any position on the chessboard.
+        >   Check if this position is safe, i.e it is not attacked by any other queens.
+        >   If the position is not safe, then look for other positions on the board and if no  such position is found,then return false as we cannot place any more queens
+        >   If the position is safe, then recursively check for Q-1 queens, if the function returns true, in other words, all queens were placed successfully on the board,then return true.
 
-    ●   Place a queen arbitrarily at any position on the chessboard.
-    ●   Check if this position is safe, i.e it is not attacked by any other queens.
-    ●   If the position is not safe, then look for other positions on the board and if no 
-        such position is found,then return false as we cannot place any more queens
-    ●   If the position is safe, then recursively check for Q-1 queens, if the function
-        returns true, in other words, all queens were placed successfully on the board,
-        then return true.
-
-    > Check if the position at x,y is not attacked by any other queen.
-    > Check if no position is marked 1 in the same row.
-    > Check if no position is marked 1 in the same column.
-    > Check if no position is marked 1 in the diagonals.
+    Steps:
+        >   Check if the position at x,y is not attacked by any other queen.
+        >   Check if no position is marked 1 in the same row.
+        >   Check if no position is marked 1 in the same column.
+        >   Check if no position is marked 1 in the diagonals.
     
 """
 
