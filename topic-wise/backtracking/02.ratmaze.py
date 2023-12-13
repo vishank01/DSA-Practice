@@ -1,7 +1,13 @@
 available_directions = [("D",1,0),("R",0,1),("T",-1,0),("L",0,-1)]
 
 """
-    format for backtracking algorithm is 
+    Backtracking Algorithm is combination of controlled recursion+backtracking
+        ●   Decision Problems: In these types of problems, we search for any feasible solution.
+        ●   Optimization Problems: In these types of problems, we search for the best possible solution.
+        ●   Enumerations Problems: In these types of problems, we find all feasible solutions.
+
+    Sample coding format for backtracking algorithm is 
+
     def backtracking_example(arr,n,r+n_r,c+n_c,output,current_path):
         if is_finish():
             pass
@@ -18,7 +24,7 @@ available_directions = [("D",1,0),("R",0,1),("T",-1,0),("L",0,-1)]
                     arr[r+n_r][c+n_c] = 1
                     current_path = current_path[:-1]
 """
-
+#Enumeration problem which finds all possible solution
 def find_all_possible_solutions_for_maze(arr:list[list[int]],n:int)->str:
     """Find all possible solutions for RAT to go from Source to Destination
 
@@ -58,6 +64,7 @@ def find_all_possible_solutions_for_maze(arr:list[list[int]],n:int)->str:
     helper(arr,n,0,0,output)
     return "".join(output).strip()
 
+#Decision type of backtracking which finds for any feasible solution
 def find_any_possible_solutions_for_maze(arr:list[list[int]],n:int)->str:
     """Find any possible solutions for RAT to go from Source to Destination
 
