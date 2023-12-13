@@ -27,8 +27,10 @@ def place_n_queens(array:list[list],n:int,q:int)->str:
     Returns:
         str: positions of queens which are placed on array, returns empty string if queens cannot be placed
 
-    >>> place_n_queens()
+    >>> place_n_queens([1, 0, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 0, 1], [0, 1, 0, 0, 0], [0, 0, 0, 1, 0]],5,5)
     (0,0),(1,2),(2,4),(3,1),(4,3)
+    >>> place_n_queens([1, 0, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 0, 1], [0, 1, 0, 0, 0], [0, 0, 0, 1, 0]],5,3)
+    (0,0),(1,2),(2,4)
     """
     def is_valid(array:list[list],n:int,row:int,column:int)->bool:
         """checks if given position in an array of size n is valid move for queen
@@ -118,9 +120,8 @@ def place_n_queens(array:list[list],n:int,q:int)->str:
     return helper(array,n,q,current_queen_positions=list())
 
 if __name__ == "__main__":
-    # import doctest
-    # doctest.testmod()
+    import doctest
+    doctest.testmod()
     n=5
     array = [[0 for _ in range(n)] for _ in range(n)]
-    print(place_n_queens(array,n,5))
-    print(array)
+    print(place_n_queens(array,n,3))
