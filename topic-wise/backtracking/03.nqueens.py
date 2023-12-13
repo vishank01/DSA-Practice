@@ -14,10 +14,34 @@
     > Check if no position is marked 1 in the diagonals.
     
 """
-from typing import Annotated
 
-def place_n_queens(array:list[list],n:Annotated[int,"Size of Array"],q:Annotated[int,"Number of Queens"])->str:
-    def is_valid(array:list[list],n:int,row:int,column:int):
+def place_n_queens(array:list[list],n:int,q:int)->str:
+    """Places q queens on a given array of size n and returns positions of placed queens 
+    and if no queens could be placed, it will return empty string
+
+    Args:
+        array (list[list]): input array on which queens will be placed
+        n (Annotated[int,&quot;Size of Array&quot;]): size of input array
+        q (Annotated[int,&quot;Number of Queens&quot;]): number of queens to be placed
+
+    Returns:
+        str: positions of queens which are placed on array, returns empty string if queens cannot be placed
+
+    >>> place_n_queens()
+    (0,0),(1,2),(2,4),(3,1),(4,3)
+    """
+    def is_valid(array:list[list],n:int,row:int,column:int)->bool:
+        """checks if given position in an array of size n is valid move for queen
+
+        Args:
+            array (list[list]): input array 
+            n (int): size of input array
+            row (int): row to be checked on given array
+            column (int): column to be checked on given array
+
+        Returns:
+            bool: returns True/False based on a valid move
+        """
         if row<0 or row>=n: return False
         if column<0 or column>=n: return False
         if array[row][column]==1: return False
@@ -64,6 +88,18 @@ def place_n_queens(array:list[list],n:Annotated[int,"Size of Array"],q:Annotated
         return True
     
     def helper(array:list[list],n:int,q:int,current_queen_positions:list[str])->str:
+        """Helper function to place given q queens on an array of size n
+
+        Args:
+            array (list[list]): input array where q queens to be placed
+            n (int): size of input array
+            q (int): number of queens to be placed in a given array
+            current_queen_positions (list[str]): stores queen positions for every recursive call 
+            and uses this in base condition to return queen positions
+
+        Returns:
+            str: positions of queens which are placed on array, returns empty string if queens cannot be placed
+        """
         #base case
         if q==0:
             return ",".join(current_queen_positions)
@@ -87,3 +123,4 @@ if __name__ == "__main__":
     n=5
     array = [[0 for _ in range(n)] for _ in range(n)]
     print(place_n_queens(array,n,5))
+    print(array)
