@@ -67,9 +67,11 @@ class BFS:
         0 1 2 3 4 
         """
         visited = [False for _ in range(self.num_vertices)]
+        self.bfs_helper(start_vertex,visited)
+        #this for loop to check if any renamining nodes are unvisited (which may exist in disconnected nodes)
         for vertex in range(self.num_vertices):
             if visited[vertex]==False:
-                self.bfs_helper(start_vertex,visited)
+                self.bfs_helper(vertex,visited)
     
     def bfs_helper(self,start_vertex:int,visited:list[bool])->None:
         """BFS traversal of nodes is printed starting from source vertex
@@ -112,9 +114,11 @@ class DFS:
         0 1 2 4 3 
         """
         visited = [False for _ in range(self.num_vertices)]
+        self.dfs_helper(start_vertex,visited)
+        #this for loop to check if any renamining nodes are unvisited (which may exist in disconnected nodes)
         for vertex in range(self.num_vertices):
             if visited[vertex]==False:
-                self.dfs_helper(start_vertex,visited)
+                self.dfs_helper(vertex,visited)
 
     def dfs_iterative(self,start_vertex:int)->None:
         """DFS using iterative approach for both connected and disconnected graphs.
@@ -126,9 +130,11 @@ class DFS:
         0 2 4 3 1 
         """
         visited = [False for _ in range(self.num_vertices)]
+        self.dfs_iterative_helper(start_vertex,visited)
+        #this for loop to check if any renamining nodes are unvisited (which may exist in disconnected nodes)
         for vertex in range(self.num_vertices):
             if visited[vertex]==False:
-                self.dfs_iterative_helper(start_vertex,visited)
+                self.dfs_iterative_helper(vertex,visited)
 
     def dfs_helper(self,start_vertex:int,visited:list[bool])->None:
         """DFS traversal of nodes is printed starting from source vertex
