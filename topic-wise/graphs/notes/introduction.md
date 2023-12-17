@@ -23,6 +23,7 @@
     - [BFS Illustration](#bfs-illustration)
   - [Depth First Traversal](#depth-first-traversal)
     - [DFS Illustration](#dfs-illustration)
+  - [BFS for Disconnected Graph](#bfs-for-disconnected-graph)
   - [Traversals DFS and BFS implementation](#traversals-dfs-and-bfs-implementation)
   - [Applications,Advantages and Disadvantages of BFS](#applicationsadvantages-and-disadvantages-of-bfs)
     - [Applications of BFS](#applications-of-bfs)
@@ -308,6 +309,24 @@ The algorithm starts at the root node (selecting some arbitrary node as the root
 
 _Now, Stack becomes empty, which means we have visited all the nodes and our DFS traversal ends._
 
+
+## BFS for Disconnected Graph
+
+Traversing a disconnected graph in BFS differs from traversing a connected graph. The main difference is that not all the vertices of a disconnected graph can be visited using all other vertices. 
+
+`So after implementing BFS, you have to check whether or not all the vertices are visited`. If some vertices remain, you must implement BFS again with that vertex. 
+
+**Example:**
+
+ Output: `0 1 2 3 4 5 6`
+
+![BFS for Disconnected Graph](https://files.codingninjas.in/article_images/bfs-in-disconnected-graph-1-1661429482.webp)
+
+Explanation:
+
+When we start with vertex 0, vertices 1 and 2 are added to the queue, and via vertex 1, vertex 3 is added. Since the graph is disconnected, vertex 4, 5, and 6 can not be visited by any visited vertex. 
+So we have to start the BFS again with vertex 4; now, vertices 5 and 6 are visited. 
+
 ## Traversals DFS and BFS implementation
 
 ```python
@@ -346,11 +365,12 @@ class Graph:
                 print('{:4}'.format(val),end="")
             print("\n")
 
-    def bfs(self,start_vertex:int)->None:
+    def bfs_helper(self,start_vertex:int,visited:list)->None:
         """BFS traversal of nodes is printed starting from source vertex
 
         Args:
             start_vertex (int): source vertex to start BFS from
+            visited (list): list of visited nodes
 
             Time Complexity: O(N*N)
             Auxiliary Space: O(N)
@@ -373,30 +393,29 @@ class Graph:
                         queue.append(i)
                         visited[i]=True
 
-    def dfs(self,start_vertex:int,visited=None)->None:
+    def dfs_helper(self,start_vertex:int,visited)->None:
         """DFS traversal of nodes is printed starting from source vertex
 
         Args:
             start_vertex (int): source vertex to start BFS from
+            visited (list): list of visited nodes
 
             Time Complexity: O(N*N)
             Auxiliary Space: O(N)
         """
-        if visited is None:
-            print(f"\nPrinting DFS using Recursive Approach from source vertex {start_vertex}")
-            visited = [False for _ in range(self.num_vertices)]
         if start_vertex<self.num_vertices:
             visited[start_vertex] = True
             print(start_vertex,end=" ")
             for i in range(self.num_vertices):
                 if (self.graph[start_vertex][i] == 1 and (not visited[i])):
-                    self.dfs(i,visited)
+                    self.dfs_helper(i,visited)
 
-    def dfs_iterative(self,start_vertex:int)->None:
+    def dfs_iterative_helper(self,start_vertex:int,visited:list)->None:
         """DFS traversal of nodes is printed starting from source vertex
 
         Args:
-            start_vertex (int): source vertex to start BFS from
+            start_vertex (int): source vertex to start DFS from
+            visited (list): list of visited nodes
 
             Time Complexity: O(N*N)
             Auxiliary Space: O(N)
@@ -408,8 +427,6 @@ class Graph:
         print(f"\nFollowing is Depth First Traversal from source vertex {start_vertex}")
         if start_vertex<self.num_vertices:
             stack = []
-            visited = [False for _ in range(self.num_vertices)]
-            
             stack.append(start_vertex)
             visited[start_vertex] = True
 
@@ -422,20 +439,58 @@ class Graph:
                         # print(i,j,self.graph[i])
                         stack.append(i)
                         visited[i]=True
+
+    def bfs(self,start_vertex:int)->None:
+        """BFS for both connected and disconnected graphs.
+        unvisited nodes are iterated to avoid missing some nodes in disconnected graphs
+
+        Args:
+            start_vertex (int): start vertex for BFS
+        """
+        visited = [False for _ in range(self.num_vertices)]
+        for vertex in range(self.num_vertices):
+            if visited[vertex]==False:
+                self.bfs_helper(start_vertex,visited)
+
+    def dfs_iterative(self,start_vertex:int)->None:
+        """DFS using iterative approach for both connected and disconnected graphs.
+        unvisited nodes are iterated to avoid missing some nodes in disconnected graphs
+
+        Args:
+            start_vertex (int): start vertex for DFS
+        """
+        visited = [False for _ in range(self.num_vertices)]
+        for vertex in range(self.num_vertices):
+            if visited[vertex]==False:
+                self.dfs_iterative_helper(start_vertex,visited)
+
+    def dfs(self,start_vertex:int)->None:
+        """DFS using recursive approach for both connected and disconnected graphs.
+        unvisited nodes are iterated to avoid missing some nodes in disconnected graphs
+
+        Args:
+            start_vertex (int): start vertex for DFS
+        """
+        print(f"\nPrinting DFS using Recursive Approach from source vertex {start_vertex}")
+        visited = [False for _ in range(self.num_vertices)]
+        for vertex in range(self.num_vertices):
+            if visited[vertex]==False:
+                self.dfs_helper(start_vertex,visited)
+
 def create_graph()->Graph:
-    g = Graph(5)
-    g.add_edge(0, 1)
-    g.add_edge(0, 2)
-    g.add_edge(1, 2)
-    g.add_edge(1, 3)
-    g.add_edge(3, 4)
-    g.add_edge(2, 4)
-    g.print_graph()
-    return g
+    graph = Graph(5)
+    graph.add_edge(0, 1)
+    graph.add_edge(0, 2)
+    graph.add_edge(1, 2)
+    graph.add_edge(1, 3)
+    graph.add_edge(3, 4)
+    graph.add_edge(2, 4)
+    graph.print_graph()
+    return graph
 
 if __name__=="__main__":
     graph = create_graph()
-    
+
     # bfs(2) is 2 0 1 3 4
     graph.bfs(2)
     # bfs(1) is 1 0 2 3 4
@@ -558,3 +613,4 @@ As a result, `BFS is severely space-bound in practice` so will exhaust the memor
 
 - `DFS is not guaranteed to find the solution`.
  And there is no guarantee to find a minimal solution, if more than one solution.
+ 
