@@ -124,7 +124,7 @@ class Graph:
                         stack.append(i)
                         visited[i]=True
 
-if __name__=="__main__":
+def create_graph()->Graph:
     g = Graph(5)
     g.add_edge(0, 1)
     g.add_edge(0, 2)
@@ -133,22 +133,19 @@ if __name__=="__main__":
     g.add_edge(3, 4)
     g.add_edge(2, 4)
     g.print_graph()
+    return g
+
+if __name__=="__main__":
+    graph = create_graph()
 
     # bfs(2) is 2 0 1 3 4
-    g.bfs(2)
+    graph.bfs(2)
     # bfs(1) is 1 0 2 3 4
-    g.bfs(1)
+    graph.bfs(1)
     # bfs(0) is 0 1 2 3 4
-    g.bfs(0)
+    graph.bfs(0)
 
-    g.dfs_iterative(0)
-    g.dfs(0)
-
-    # g.remove_all_edges()
-    # g.add_edge(1, 0) 
-    # g.add_edge(0, 2) 
-    # g.add_edge(2, 1) 
-    # g.add_edge(0, 3) 
-    # g.add_edge(1, 4) 
-    # g.dfs_iterative(0)
-    # g.dfs(0)
+    # dfs_iterative(0) is 0 2 4 3 1
+    graph.dfs_iterative(0)
+    # dfs(0) is 0 1 2 3 4 3
+    graph.dfs(0)

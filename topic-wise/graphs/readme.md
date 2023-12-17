@@ -21,6 +21,9 @@
     - [2. Adjacency list implementation](#2-adjacency-list-implementation)
     - [BFS](#bfs)
       - [BFS Illustration](#bfs-illustration)
+    - [DFS](#dfs)
+      - [DFS Illustration](#dfs-illustration)
+    - [Traversals DFS and BFS implementation](#traversals-dfs-and-bfs-implementation)
 
 ## Graphs Theory
 
@@ -241,3 +244,186 @@ As we can see that every neighbours of node 3 is visited, so move to the next no
 As we can see that every neighbours of node 4 are visited, so move to the next node that is in the front of the queue.
 
 ![Step 7](https://media.geeksforgeeks.org/wp-content/uploads/20221221015827/6-768.png)
+
+### DFS
+
+Depth First Traversal (or DFS) for a graph is similar to Depth First Traversal of a tree.
+
+The only catch here is, that, unlike trees, graphs may contain cycles (a node may be visited twice).
+
+To avoid processing a node more than once, use a boolean visited array.
+
+**_A graph can have more than one DFS traversal._**
+
+#### DFS Illustration
+
+Depth-first search is an algorithm for traversing or searching tree or graph data structures.
+
+The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph) and explores as far as possible along each branch before backtracking.
+
+**Step1:** Initially stack and visited arrays are empty.
+
+![Step 1](https://media.geeksforgeeks.org/wp-content/uploads/20230510170648/DFS-(1)-copy.webp)
+
+**Step 2:** Visit 0 and put its adjacent nodes which are not visited yet into the stack.
+
+![Step 2](https://media.geeksforgeeks.org/wp-content/uploads/20230510170831/DFS-(2)-copy.webp)
+
+**Step 3:** Now, Node 1 at the top of the stack, so visit node 1 and pop it from the stack and put all of its adjacent nodes which are not visited in the stack.
+
+![Step 3](https://media.geeksforgeeks.org/wp-content/uploads/20230510171121/DFS-(3)-copy.webp)
+
+**Step 4:** Now, Node 2 at the top of the stack, so visit node 2 and pop it from the stack and put all of its adjacent nodes which are not visited (i.e, 3, 4) in the stack.
+
+![Step 4](https://media.geeksforgeeks.org/wp-content/uploads/20230510171029/DFS-(4)-copy.webp)
+
+**Step 5:** Now, Node 4 at the top of the stack, so visit node 4 and pop it from the stack and put all of its adjacent nodes which are not visited in the stack.
+
+![Step 5](https://media.geeksforgeeks.org/wp-content/uploads/20230510171653/DFS-(5)-copy.webp)
+
+**Step 6:** Now, Node 3 at the top of the stack, so visit node 3 and pop it from the stack and put all of its adjacent nodes which are not visited in the stack.
+
+![Step 6](https://media.geeksforgeeks.org/wp-content/uploads/20230510171604/DFS-(6)-copy.webp)
+
+_Now, Stack becomes empty, which means we have visited all the nodes and our DFS traversal ends._
+
+### Traversals DFS and BFS implementation
+
+```python
+class Graph:
+    def __init__(self,num_vertices:int) -> None:
+        """Implementation of BFS using Adjacency Matrix to traverse from a given source vertex
+            Time Complexity:
+                Addition of node is O(1)
+                Removal of node is O(1)
+                Initialization is O(N*N)
+
+        Args:
+            v (int): number of num_vertices for a graph
+        """
+        self.num_vertices = num_vertices
+        self.graph = [[0 for _ in range(self.num_vertices)] for _ in range(self.num_vertices)]
+
+    def add_edge(self,v1:int,v2:int)->None:
+        if v1<self.num_vertices and v2<self.num_vertices:
+            self.graph[v1][v2]=1
+            self.graph[v2][v1]=1
+
+    def remove_edge(self,v1:int,v2:int)->None:
+        if v1<self.num_vertices and v2<self.num_vertices:
+            self.graph[v1][v2]=0
+            self.graph[v2][v1]=0
+
+    def remove_all_edges(self)->None:
+        for i in range(self.num_vertices):
+            for j in range(self.num_vertices):
+                self.graph[i][j]=0
+    
+    def print_graph(self):
+        for row in self.graph:
+            for val in row:
+                print('{:4}'.format(val),end="")
+            print("\n")
+
+    def bfs(self,start_vertex:int)->None:
+        """BFS traversal of nodes is printed starting from source vertex
+
+        Args:
+            start_vertex (int): source vertex to start BFS from
+
+            Time Complexity: O(N*N)
+            Auxiliary Space: O(N)
+        """
+        print(f"\nFollowing is Breadth First Traversal from source vertex {start_vertex}")
+        if start_vertex<self.num_vertices:
+            queue = []
+            visited = [False for _ in range(self.num_vertices)]
+            
+            queue.append(start_vertex)
+            visited[start_vertex] = True
+
+            while len(queue)>0:
+                current_vertex = queue.pop(0)
+                print(current_vertex,end=' ')
+                #loop over vertex's row and get it's adjacent vertices
+                for i in range(self.num_vertices):
+                    if (self.graph[current_vertex][i] == 1 and (not visited[i])):
+                        # print(i,j,self.graph[i])
+                        queue.append(i)
+                        visited[i]=True
+
+    def dfs(self,start_vertex:int,visited=None)->None:
+        """DFS traversal of nodes is printed starting from source vertex
+
+        Args:
+            start_vertex (int): source vertex to start BFS from
+
+            Time Complexity: O(N*N)
+            Auxiliary Space: O(N)
+        """
+        if visited is None:
+            print(f"\nPrinting DFS using Recursive Approach from source vertex {start_vertex}")
+            visited = [False for _ in range(self.num_vertices)]
+        if start_vertex<self.num_vertices:
+            visited[start_vertex] = True
+            print(start_vertex,end=" ")
+            for i in range(self.num_vertices):
+                if (self.graph[start_vertex][i] == 1 and (not visited[i])):
+                    self.dfs(i,visited)
+
+    def dfs_iterative(self,start_vertex:int)->None:
+        """DFS traversal of nodes is printed starting from source vertex
+
+        Args:
+            start_vertex (int): source vertex to start BFS from
+
+            Time Complexity: O(N*N)
+            Auxiliary Space: O(N)
+
+        Limitations:
+            Iterative DFS mplementation prints only vertices that are reachable from a given vertex. 
+            To print all vertices of a graph, call DFS for every unvisited vertex.
+        """
+        print(f"\nFollowing is Depth First Traversal from source vertex {start_vertex}")
+        if start_vertex<self.num_vertices:
+            stack = []
+            visited = [False for _ in range(self.num_vertices)]
+            
+            stack.append(start_vertex)
+            visited[start_vertex] = True
+
+            while len(stack)>0:
+                current_vertex = stack.pop(-1)
+                print(current_vertex,end=' ')
+                #loop over vertex's row and get it's adjacent vertices
+                for i in range(self.num_vertices):
+                    if (self.graph[current_vertex][i] == 1 and (not visited[i])):
+                        # print(i,j,self.graph[i])
+                        stack.append(i)
+                        visited[i]=True
+def create_graph()->Graph:
+    g = Graph(5)
+    g.add_edge(0, 1)
+    g.add_edge(0, 2)
+    g.add_edge(1, 2)
+    g.add_edge(1, 3)
+    g.add_edge(3, 4)
+    g.add_edge(2, 4)
+    g.print_graph()
+    return g
+
+if __name__=="__main__":
+    graph = create_graph()
+    
+    # bfs(2) is 2 0 1 3 4
+    graph.bfs(2)
+    # bfs(1) is 1 0 2 3 4
+    graph.bfs(1)
+    # bfs(0) is 0 1 2 3 4
+    graph.bfs(0)
+
+    # dfs_iterative(0) is 0 2 4 3 1
+    graph.dfs_iterative(0)
+    # dfs(0) is 0 1 2 3 4 3
+    graph.dfs(0)
+```
