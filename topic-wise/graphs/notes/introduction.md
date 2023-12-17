@@ -17,13 +17,21 @@
     - [12. Bipartite Graph](#12-bipartite-graph)
     - [13. Weighted Graph](#13-weighted-graph)
   - [Representation of Graphs](#representation-of-graphs)
-    - [1. Adjacency Matrix](#1-adjacency-matrix)
-    - [2. Adjacency list implementation](#2-adjacency-list-implementation)
-    - [BFS](#bfs)
-      - [BFS Illustration](#bfs-illustration)
-    - [DFS](#dfs)
-      - [DFS Illustration](#dfs-illustration)
-    - [Traversals DFS and BFS implementation](#traversals-dfs-and-bfs-implementation)
+    - [1. Adjacency Matrix Implementation](#1-adjacency-matrix-implementation)
+    - [2. Adjacency List Implementation](#2-adjacency-list-implementation)
+  - [Breadth First Traversal](#breadth-first-traversal)
+    - [BFS Illustration](#bfs-illustration)
+  - [Depth First Traversal](#depth-first-traversal)
+    - [DFS Illustration](#dfs-illustration)
+  - [Traversals DFS and BFS implementation](#traversals-dfs-and-bfs-implementation)
+  - [Applications,Advantages and Disadvantages of BFS](#applicationsadvantages-and-disadvantages-of-bfs)
+    - [Applications of BFS](#applications-of-bfs)
+    - [Advantages of BFS](#advantages-of-bfs)
+    - [Disadvantages of BFS](#disadvantages-of-bfs)
+  - [Applications,Advantages and Disadvantages of DFS](#applicationsadvantages-and-disadvantages-of-dfs)
+    - [Applications of DFS](#applications-of-dfs)
+    - [Advantages of DFS](#advantages-of-dfs)
+    - [Disadvantages of DFS](#disadvantages-of-dfs)
 
 ## Graphs Theory
 
@@ -115,7 +123,7 @@ There are two ways to store a graph:
 | Removing Edge |       O(1)       |      O(N)      |
 | Initializing  |      O(N*N)      |      O(N)      |
 
-### 1. Adjacency Matrix
+### 1. Adjacency Matrix Implementation
 
 ```python
 class AdjacencyMatrix:
@@ -162,7 +170,7 @@ if __name__=="__main__":
     g.print_graph()
 ```
 
-### 2. Adjacency list implementation
+### 2. Adjacency List Implementation
 
 ```python
 class AdjacencyList:
@@ -207,7 +215,7 @@ if __name__=="__main__":
     g.print_graph()
 ```
 
-### BFS
+## Breadth First Traversal
 
 Breadth-First Traversal (or Search) for a graph is similar to the Breadth-First Traversal of a tree.
 
@@ -218,7 +226,7 @@ To avoid processing a node more than once, we divide the vertices into two categ
 - Visited
 - Not visited.
 
-#### BFS Illustration
+### BFS Illustration
 
 - Starting from the root, all the nodes at a particular level are visited first and then the nodes of the next level are traversed till all the nodes are visited.
 
@@ -258,7 +266,7 @@ As we can see that every neighbours of node 4 are visited, so move to the next n
 
 ![Step 7](https://media.geeksforgeeks.org/wp-content/uploads/20221221015827/6-768.png)
 
-### DFS
+## Depth First Traversal
 
 Depth First Traversal (or DFS) for a graph is similar to Depth First Traversal of a tree.
 
@@ -268,7 +276,7 @@ To avoid processing a node more than once, use a boolean visited array.
 
 **_A graph can have more than one DFS traversal._**
 
-#### DFS Illustration
+### DFS Illustration
 
 Depth-first search is an algorithm for traversing or searching tree or graph data structures.
 
@@ -300,7 +308,7 @@ The algorithm starts at the root node (selecting some arbitrary node as the root
 
 _Now, Stack becomes empty, which means we have visited all the nodes and our DFS traversal ends._
 
-### Traversals DFS and BFS implementation
+## Traversals DFS and BFS implementation
 
 ```python
 class Graph:
@@ -440,3 +448,113 @@ if __name__=="__main__":
     # dfs(0) is 0 1 2 3 4 3
     graph.dfs(0)
 ```
+
+## Applications,Advantages and Disadvantages of BFS
+
+### Applications of BFS
+
+1. `Shortest Path and Minimum Spanning Tree for unweighted graph`: In an unweighted graph, the shortest path is the path with the least number of edges.
+
+   With Breadth First, we always reach a vertex from a given source using the minimum number of edges. Also, in the case of unweighted graphs, any spanning tree is Minimum Spanning Tree and we can use either DFS or BFS for finding a spanning tree.
+
+2. `Minimum Spanning Tree for weighted graphs`: We can also find Minimum Spanning Tree for weighted graphs using BFT, but the condition is that `the weight should be non-negative` and the same for each pair of vertices.
+
+3. `Peer-to-Peer Networks`: In Peer-to-Peer Networks like BitTorrent, Breadth First Search is used to find all neighbor nodes.
+
+4. `Crawlers in Search Engines`: Crawlers build an index using Breadth First. The idea is to start from the source page and follow all links from the source and keep doing the same. DFS can also be used for crawlers, but the `advantage of BFS is, the depth or levels of the built tree can be limite`d.
+
+5. `Social Networking Websites`: In social networks, we can find people within a given distance ‘k’ from a person using Breadth First Search till ‘k’ levels.
+
+6. `GPS Navigation systems`: Breadth First Search is used to find all neighboring locations.
+
+7. `Broadcasting in Network`: In networks, a broadcasted packet follows Breadth First Search to reach all nodes.
+
+8. `In Garbage Collection`: Breadth First Search is used in copying garbage collection using Cheney’s algorithm. Breadth First Search is preferred over Depth First Search because of a better locality of reference.
+
+9. `Cycle detection in undirected graph`: In undirected graphs, either BFS or DFS can be used to detect a cycle. Also, We can use BFS to detect cycle in a directed graph.
+
+10. `Ford–Fulkerson algorithm`: In Ford–Fulkerson algorithm, we can either use BFS or DFS to find the maximum flow. `BFS is preferred as it reduces the worst-case time complexity to O(VE2)`.
+
+11. `To test if a graph is Bipartite`: We can either use BFS or DFS.
+
+12. `Path Finding`: We can either use BFS or DFS to find if there is a path between two vertices.
+
+13. `Finding all nodes within one connected component`: We can either use BFS or DFS to find all nodes reachable from a given node.
+
+14. `AI`: In AI, BFS is used in traversing a game tree to find the best move.
+
+15. `Network Security`: In the field of network security, BFS is used in traversing a network to find all the devices connected to it.
+
+16. `Connected Component`: We can find all connected components in an undirected graph.
+
+17. `Topological sorting`: BFS can be used to find a topological ordering of the nodes in a directed acyclic graph (DAG).
+
+18. `Image processing`: BFS can be used to flood-fill an image with a particular color or to find connected components of pixels.
+
+19. `Recommender systems`: BFS can be used to find similar items in a large dataset by traversing the items’ connections in a similarity graph.
+
+20. `Other usages`: Many algorithms like `Prim’s Minimum Spanning Tree` and `Dijkstra’s Single Source Shortest Path` use structures similar to Breadth First Search.
+
+### Advantages of BFS
+
+- BFS will `never get trapped` exploring the useful path forever.
+- If there is a solution, BFS will definitely find it.
+- If there is more than one solution then BFS can find the minimal one that requires less number of steps.
+- Low storage requirement – linear with depth.
+Easily programmable.
+
+### Disadvantages of BFS
+
+The main drawback of BFS is its `memory requirement`. Since each level of the graph must be saved in order to generate the next level and the amount of memory is proportional to the number of nodes stored the `space complexity of BFS is O(bd)`, where b is the branching factor(the number of children at each node, the outdegree) and d is the depth.
+
+As a result, `BFS is severely space-bound in practice` so will exhaust the memory available on typical computers in a matter of minutes.
+
+## Applications,Advantages and Disadvantages of DFS
+
+### Applications of DFS
+
+1. `Detecting cycle in a graph`: A graph has a cycle if and only if we see a back edge during DFS. So we can run DFS for the graph and check for back edges.
+
+2. `Path Finding`: We can specialize the DFS algorithm to find a path between two given vertices u and z.
+
+    Call DFS(G, u) with u as the start vertex.
+    Use a stack S to keep track of the path between the start vertex and the current vertex.
+    As soon as destination vertex z is encountered, return the path as the contents of the stack
+
+3. `Topological Sorting`: Topological Sorting is mainly used for scheduling jobs from the given dependencies among jobs.
+
+   In computer science, applications of this type arise in instruction scheduling, ordering of formula cell evaluation when recomputing formula values in spreadsheets, logic synthesis, determining the order of compilation tasks to perform in makefiles, data serialization, and resolving symbol dependencies in linkers.
+
+4. `To test if a graph is bipartite`: We can augment either BFS or DFS when we first discover a new vertex, color it opposite its parents, and for each other edge, check it doesn’t link two vertices of the same color. The first vertex in any connected component can be red or black.
+
+5. `Finding Strongly Connected Components of a graph`: A directed graph is called strongly connected if there is a path from each vertex in the graph to every other vertex. (See this for DFS-based algo for finding Strongly Connected Components)
+
+6. `Solving puzzles with only one solution`: such as mazes. (DFS can be adapted to find all solutions to a maze by only including nodes on the current path in the visited set.).
+
+7. `Web crawlers`: Depth-first search can be used in the implementation of web crawlers to explore the links on a website.
+
+8. `Maze generation`: Depth-first search can be used to generate random mazes.
+
+9. `Model checking`: Depth-first search can be used in model checking, which is the process of checking that a model of a system meets a certain set of properties.
+
+10. `Backtracking`: Depth-first search can be used in backtracking algorithms.
+
+### Advantages of DFS
+
+- `Memory requirement is only linear` with respect to the search graph. This is in contrast with breadth-first search which requires more space. The reason is that the algorithm only needs to store a stack of nodes on the path from the root to the current node.
+- The time complexity of a depth-first Search to depth d and branching factor b (the number of children at each node, the outdegree) is `O(bd)` since it generates the same set of nodes as breadth-first search, but simply in a different order. Thus practically depth-first search is time-limited rather than space-limited.
+  
+- If depth-first search finds solution without exploring much in a path then the time and space it takes will be very less.
+
+- `DFS requires less memory` since only the nodes on the current path are stored. By chance DFS may find a solution without examining much of the search space at all.
+
+### Disadvantages of DFS
+
+- The disadvantage of DFS is that there is a possibility that it may down the left-most path forever. `Even a finite graph can generate an infinite tree.`
+  
+    One solution to this problem is to impose a cutoff depth on the search. Although ideal cutoff is the solution depth d and this value is rarely known in advance of actually solving the problem.
+
+- If the chosen cutoff depth is less than d, the algorithm will fail to find a solution, whereas if the cutoff depth is greater than d, a large price is paid in execution time, and the first solution found may not be an optimal one.
+
+- `DFS is not guaranteed to find the solution`.
+ And there is no guarantee to find a minimal solution, if more than one solution.
