@@ -147,6 +147,19 @@ class AdjacencyMatrix:
             for val in row:
                 print('{:4}'.format(val),end="")
             print("\n")
+
+if __name__=="__main__":
+    g = AdjacencyMatrix(5)
+    g.add_edge(0, 1)
+    g.add_edge(0, 2)
+    g.add_edge(1, 2)
+    g.add_edge(2, 0)
+    g.add_edge(2, 3)
+    g.print_graph()
+    g.remove_edge(0,2)
+    g.remove_edge(3,2)
+    print("\n**\n")
+    g.print_graph()
 ```
 
 ### 2. Adjacency list implementation
