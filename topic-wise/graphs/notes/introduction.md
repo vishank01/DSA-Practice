@@ -23,6 +23,7 @@
     - [BFS Illustration](#bfs-illustration)
   - [Depth First Traversal](#depth-first-traversal)
     - [DFS Illustration](#dfs-illustration)
+  - [BFS for Disconnected Graph](#bfs-for-disconnected-graph)
   - [Traversals DFS and BFS implementation](#traversals-dfs-and-bfs-implementation)
   - [Applications,Advantages and Disadvantages of BFS](#applicationsadvantages-and-disadvantages-of-bfs)
     - [Applications of BFS](#applications-of-bfs)
@@ -60,7 +61,7 @@ A graph in which edges do not have any direction. That is the nodes are unordere
 ### 4. Directed Graph
 
 A graph in which edge has direction. That is the nodes are ordered pairs in the definition of every edge.
-![Alt text](image-1.png)
+![Directed Undirected graph](https://media.geeksforgeeks.org/wp-content/uploads/20200630114438/directed.jpg)
 
 ### 5. Connected Graph
 
@@ -308,10 +309,28 @@ The algorithm starts at the root node (selecting some arbitrary node as the root
 
 _Now, Stack becomes empty, which means we have visited all the nodes and our DFS traversal ends._
 
+
+## BFS for Disconnected Graph
+
+Traversing a disconnected graph in BFS differs from traversing a connected graph. The main difference is that not all the vertices of a disconnected graph can be visited using all other vertices. 
+
+`So after implementing BFS, you have to check whether or not all the vertices are visited`. If some vertices remain, you must implement BFS again with that vertex. 
+
+**Example:**
+
+ Output: `0 1 2 3 4 5 6`
+
+![BFS for Disconnected Graph](https://files.codingninjas.in/article_images/bfs-in-disconnected-graph-1-1661429482.webp)
+
+Explanation:
+
+When we start with vertex 0, vertices 1 and 2 are added to the queue, and via vertex 1, vertex 3 is added. Since the graph is disconnected, vertex 4, 5, and 6 can not be visited by any visited vertex. 
+So we have to start the BFS again with vertex 4; now, vertices 5 and 6 are visited. 
+
 ## Traversals DFS and BFS implementation
 
 ```python
-class Graph:
+class UndirectedGraph:
     def __init__(self,num_vertices:int) -> None:
         """Implementation of BFS using Adjacency Matrix to traverse from a given source vertex
             Time Complexity:
@@ -346,20 +365,42 @@ class Graph:
                 print('{:4}'.format(val),end="")
             print("\n")
 
+class BFS:
+    def __init__(self,graph:UndirectedGraph)->None:
+        self.graph = graph.graph
+        self.num_vertices = len(self.graph)
+
     def bfs(self,start_vertex:int)->None:
+        """BFS for both connected and disconnected graphs.
+        unvisited nodes are iterated to avoid missing some nodes in disconnected graphs
+
+        Args:
+            start_vertex (int): start vertex for BFS
+
+        >>> bfs.bfs(2)
+        2 0 1 4 3 
+        >>> bfs.bfs(1)
+        1 0 2 3 4 
+        >>> bfs.bfs(0)
+        0 1 2 3 4 
+        """
+        visited = [False for _ in range(self.num_vertices)]
+        for vertex in range(self.num_vertices):
+            if visited[vertex]==False:
+                self.bfs_helper(start_vertex,visited)
+    
+    def bfs_helper(self,start_vertex:int,visited:list[bool])->None:
         """BFS traversal of nodes is printed starting from source vertex
 
         Args:
             start_vertex (int): source vertex to start BFS from
+            visited (list[bool]): list of visited nodes
 
             Time Complexity: O(N*N)
             Auxiliary Space: O(N)
         """
-        print(f"\nFollowing is Breadth First Traversal from source vertex {start_vertex}")
         if start_vertex<self.num_vertices:
             queue = []
-            visited = [False for _ in range(self.num_vertices)]
-            
             queue.append(start_vertex)
             visited[start_vertex] = True
 
@@ -373,30 +414,64 @@ class Graph:
                         queue.append(i)
                         visited[i]=True
 
-    def dfs(self,start_vertex:int,visited=None)->None:
+class DFS:
+    def __init__(self,graph:UndirectedGraph)->None:
+        self.graph = graph.graph
+        self.num_vertices = len(self.graph)
+    
+    def dfs(self,start_vertex:int)->None:
+        """DFS using recursive approach for both connected and disconnected graphs.
+        unvisited nodes are iterated to avoid missing some nodes in disconnected graphs
+
+        Args:
+            start_vertex (int): start vertex for DFS
+
+        >>> dfs.dfs(0)
+        0 1 2 4 3 
+        """
+        visited = [False for _ in range(self.num_vertices)]
+        for vertex in range(self.num_vertices):
+            if visited[vertex]==False:
+                self.dfs_helper(start_vertex,visited)
+
+    def dfs_iterative(self,start_vertex:int)->None:
+        """DFS using iterative approach for both connected and disconnected graphs.
+        unvisited nodes are iterated to avoid missing some nodes in disconnected graphs
+
+        Args:
+            start_vertex (int): start vertex for DFS
+        >>> dfs.dfs_iterative(0)
+        0 2 4 3 1 
+        """
+        visited = [False for _ in range(self.num_vertices)]
+        for vertex in range(self.num_vertices):
+            if visited[vertex]==False:
+                self.dfs_iterative_helper(start_vertex,visited)
+
+    def dfs_helper(self,start_vertex:int,visited:list[bool])->None:
         """DFS traversal of nodes is printed starting from source vertex
 
         Args:
-            start_vertex (int): source vertex to start BFS from
+            start_vertex (int): source vertex to start DFS from
+            visited (list[bool]): list of visited nodes
 
             Time Complexity: O(N*N)
             Auxiliary Space: O(N)
         """
-        if visited is None:
-            print(f"\nPrinting DFS using Recursive Approach from source vertex {start_vertex}")
-            visited = [False for _ in range(self.num_vertices)]
         if start_vertex<self.num_vertices:
             visited[start_vertex] = True
             print(start_vertex,end=" ")
-            for i in range(self.num_vertices):
+            for i in range(len(self.graph[start_vertex])):
+                #find neighbours of start_vertex which is not visited
                 if (self.graph[start_vertex][i] == 1 and (not visited[i])):
-                    self.dfs(i,visited)
+                    self.dfs_helper(i,visited)
 
-    def dfs_iterative(self,start_vertex:int)->None:
+    def dfs_iterative_helper(self,start_vertex:int,visited:list[bool])->None:
         """DFS traversal of nodes is printed starting from source vertex
 
         Args:
-            start_vertex (int): source vertex to start BFS from
+            start_vertex (int): source vertex to start DFS from
+            visited (list[bool]): list of visited nodes
 
             Time Complexity: O(N*N)
             Auxiliary Space: O(N)
@@ -405,11 +480,8 @@ class Graph:
             Iterative DFS mplementation prints only vertices that are reachable from a given vertex. 
             To print all vertices of a graph, call DFS for every unvisited vertex.
         """
-        print(f"\nFollowing is Depth First Traversal from source vertex {start_vertex}")
         if start_vertex<self.num_vertices:
             stack = []
-            visited = [False for _ in range(self.num_vertices)]
-            
             stack.append(start_vertex)
             visited[start_vertex] = True
 
@@ -422,31 +494,40 @@ class Graph:
                         # print(i,j,self.graph[i])
                         stack.append(i)
                         visited[i]=True
-def create_graph()->Graph:
-    g = Graph(5)
-    g.add_edge(0, 1)
-    g.add_edge(0, 2)
-    g.add_edge(1, 2)
-    g.add_edge(1, 3)
-    g.add_edge(3, 4)
-    g.add_edge(2, 4)
-    g.print_graph()
-    return g
+
+
+def create_graph()->UndirectedGraph:
+    """ 
+    Adjacency List
+
+        0->1->2->null
+        1->0->2->3->null
+        2->0->1->4->null
+        3->1->4->null
+        4->3->2->null
+
+    Adjacency Matrix 
+
+        0   1   1   0   0
+        1   0   1   1   0
+        1   1   0   0   1
+        0   1   0   0   1
+        0   0   1   1   0
+    
+    """
+    graph = UndirectedGraph(5)
+    graph.add_edge(0, 1)
+    graph.add_edge(0, 2)
+    graph.add_edge(1, 2)
+    graph.add_edge(1, 3)
+    graph.add_edge(3, 4)
+    graph.add_edge(2, 4)
+    graph.print_graph()
+    return graph
 
 if __name__=="__main__":
     graph = create_graph()
-    
-    # bfs(2) is 2 0 1 3 4
-    graph.bfs(2)
-    # bfs(1) is 1 0 2 3 4
-    graph.bfs(1)
-    # bfs(0) is 0 1 2 3 4
-    graph.bfs(0)
-
-    # dfs_iterative(0) is 0 2 4 3 1
-    graph.dfs_iterative(0)
-    # dfs(0) is 0 1 2 3 4 3
-    graph.dfs(0)
+    import doctest;doctest.testmod(extraglobs={'bfs': BFS(graph),'dfs': DFS(graph)})
 ```
 
 ## Applications,Advantages and Disadvantages of BFS
@@ -558,3 +639,4 @@ As a result, `BFS is severely space-bound in practice` so will exhaust the memor
 
 - `DFS is not guaranteed to find the solution`.
  And there is no guarantee to find a minimal solution, if more than one solution.
+ 
