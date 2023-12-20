@@ -26,7 +26,7 @@ def count_islands(matrix:list[list[int]])->int:
     def dfs(i:int,j:int)->int:
         matrix[i][j]=-1
         for current_move in available_moves:
-            i,j = i+current_move[0],j+current_move[1]
+            i,j = i+current_move[0],j+current_move[1]   
             if is_valid_x_y(i,j):
                 dfs(i,j)
             i,j=i-current_move[0],j-current_move[1]

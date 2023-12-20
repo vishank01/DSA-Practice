@@ -61,7 +61,7 @@ A graph in which edges do not have any direction. That is the nodes are unordere
 ### 4. Directed Graph
 
 A graph in which edge has direction. That is the nodes are ordered pairs in the definition of every edge.
-![Alt text](image-1.png)
+![Directed Undirected graph](https://media.geeksforgeeks.org/wp-content/uploads/20200630114438/directed.jpg)
 
 ### 5. Connected Graph
 
