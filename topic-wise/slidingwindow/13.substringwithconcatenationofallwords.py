@@ -65,4 +65,4 @@ if __name__=="__main__":
     print(words_concatenation(s = "barfoothefoobarman", words = ["foo","bar"]))
     print(words_concatenation(s = "wordgoodgoodgoodbestword", words = ["word","good","best","word"]))
     print(words_concatenation(s = "barfoofoobarthefoobarman", words = ["bar","foo","the"]))
-    print(words_concatenation(s="aaa",words=["a","a"]))
+    print(words_concatenation(s="aaa",words=["a","a"]))#[0,1]
