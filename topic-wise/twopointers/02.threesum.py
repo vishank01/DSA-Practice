@@ -12,8 +12,12 @@ def three_sum(nums:list[int])->set[tuple[int]]:
             start+end=-i
             Now use Two pointer Approach with target value -end
 
-        Complexity:  
-            Sorting the array will take O(N * logN). The searchPair() function will take O(N). As we are calling searchPair() for every number in the input array, this means that overall searchTriplets() will take O(N * logN + N^2), which is asymptotically equivalent to O(N^2).
+        Time Complexity:  
+            Sorting the array will take O(N * logN). Inner While loop searching for j,k will take O(N). 
+            As we are calling it for for every number in the input array, this means that overall func will take O(N * logN + N^2),
+            which is asymptotically equivalent to O(N^2).
+            
+        Space Complexity:
             Ignoring the space required for the output array, the space complexity of the above algorithm will be O(N) which is required for sorting.
     """
     nums.sort()
