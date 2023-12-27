@@ -38,6 +38,7 @@ def four_sum(nums:list[int],target:int)->list[list[int]]:
     output = []
     n = len(nums)
     for i in range(n-3):
+        #this avoids giving duplicate data for [1,1,1,1] and target 4 as [[1,1,1,1],[1,1,1,1],[1,1,1,1]] instead of just [[1,1,1,1]]
         if i>0 and nums[i]==nums[i-1]:
             continue
         for j in range(i+1,n-2):
@@ -57,12 +58,11 @@ def search_pairs(nums:list[int],first:int,second:int,n:int,target:int,output:lis
             j-=1
         else:
             output.append([nums[first],nums[second],nums[i],nums[j]])
-            i+=1
-            j-=1
+            i+=1;j-=1
             while i<j and nums[i]==nums[i-1]:
                 i+=1
-            while i<j and nums[j]==nums[j-1]:
-                j-=1
+            # while i<j and nums[j]==nums[j-1]:
+            #     j-=1
 
 def four_sum_recursive(nums:list[int],target:int)->list[list[int]]:
     """
@@ -142,3 +142,8 @@ if __name__=="__main__":
     #[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
     print(four_sum(nums = [1,0,-1,0,-2,2], target = 0))
     print(four_sum_recursive(nums = [1,0,-1,0,-2,2], target = 0))
+    print(four_sum(nums=[-1,0,-5,-2,-2,-4,0,1,-2],target=-9))
+    print(four_sum_recursive(nums=[-1,0,-5,-2,-2,-4,0,1,-2],target=-9))
+
+    print(four_sum(nums=[-3,-2,-1,0,0,1,2,3],target=0))
+    print(four_sum_recursive(nums=[-3,-2,-1,0,0,1,2,3],target=0))
