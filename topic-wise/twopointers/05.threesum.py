@@ -35,7 +35,7 @@ Constraints:
     -105 <= nums[i] <= 105
 """
 
-def three_sum(nums:list[int])->set[tuple[int]]:
+def three_sum(nums:list[int])->list[list[int]]:
     """
         Approach:
             nums[i]+nums[start]+nums[end]=0
@@ -51,9 +51,12 @@ def three_sum(nums:list[int])->set[tuple[int]]:
             Ignoring the space required for the output array, the space complexity of the above algorithm will be O(N) which is required for sorting.
     """
     nums.sort()
+    output = []
     n = len(nums)
-    output = set()
     for i in range(n-2):
+        #to avoid duplicates in output
+        if i>0 and nums[i]==nums[i-1]:
+            continue
         start,end = i+1,n-1
         while start<end:
             if nums[start]+nums[end]<-nums[i]:
@@ -61,11 +64,46 @@ def three_sum(nums:list[int])->set[tuple[int]]:
             elif nums[start]+nums[end]>-nums[i]:
                 end-=1
             else:
-                output.add((nums[i],nums[start],nums[end]))
+                output.append([nums[i],nums[start],nums[end]])
                 start+=1
                 end-=1
     return output
 
+def three_sum_using_two_sum(nums:list[int])->list[list[int]]:
+    """
+        we check whether two consecutive elements are equal or not because if they are, we don't want them (solutions need to be unique) 
+        and will skip to the next set of numbers. Also, there is an additional constrain in this line that i > 0. 
+        This is added to take care of cases like nums = [1,1,1] and target = 3. If we didn't have i > 0, 
+        then we'd skip the only correct solution and would return [] as our answer which is wrong (correct answer is [[1,1,1]]
+    """
+    nums.sort()
+    output = []
+    n = len(nums)
+    for i in range(n-2):
+        if i>0 and nums[i]==nums[i-1]:
+            continue
+        search_pairs(nums,i,n,0,output)
+    return output
+
+def search_pairs(nums:list[int],first:int,n:int,target:int,output:list[int]):
+    i,j = first+1,n-1
+    #i and j cannot be equal as numbers should be distinct
+    while i<j:
+        s = nums[first]+nums[i]+nums[j]
+        if s<target:
+            i+=1
+        elif s>target:
+            j-=1
+        else:
+            output.append([nums[first],nums[i],nums[j]])
+            i+=1
+            j-=1
+            while i<j and nums[i]==nums[i-1]:
+                i+=1
+            while i<j and nums[j]==nums[j-1]:
+                j-=1
+
+
 if __name__=="__main__":
-    print(three_sum([-1,0,1,2,-1,-4]))
-    print(three_sum([0,1,1]))
+    print(three_sum_using_two_sum([-1,0,1,2,-1,-4]))
+    print(three_sum_using_two_sum([0,1,1]))
