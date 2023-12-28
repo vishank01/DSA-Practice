@@ -58,11 +58,11 @@ def search_pairs(nums:list[int],first:int,second:int,n:int,target:int,output:lis
             j-=1
         else:
             output.append([nums[first],nums[second],nums[i],nums[j]])
-            i+=1;j-=1
-            while i<j and nums[i]==nums[i-1]:
+            while i<j and nums[i]==nums[i+1]:
                 i+=1
-            # while i<j and nums[j]==nums[j-1]:
-            #     j-=1
+            while i<j and nums[j]==nums[j-1]:
+                j-=1
+            i+=1;j-=1
 
 def four_sum_recursive(nums:list[int],target:int)->list[list[int]]:
     """

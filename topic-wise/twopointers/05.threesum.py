@@ -96,12 +96,11 @@ def search_pairs(nums:list[int],first:int,n:int,target:int,output:list[int]):
             j-=1
         else:
             output.append([nums[first],nums[i],nums[j]])
-            i+=1
-            j-=1
-            while i<j and nums[i]==nums[i-1]:
+            while i<j and nums[i]==nums[i+1]:
                 i+=1
             while i<j and nums[j]==nums[j-1]:
                 j-=1
+            i+=1;j-=1
 
 
 if __name__=="__main__":
