@@ -42,7 +42,7 @@ def find_len_of_shortest_subarray(nums:list[int])->int:
             r to n-1 is other sorted piece
             we have to keep some elements from 0 to l and check the smallest r that's suitable to hold the left piece.
                 edge case1: we may remove all left elements, so answer is r (we have to remove all from 0 to r-1)
-                edgecase2: we can remove all right ones (n-l)
+                edgecase2: we can remove all right ones (n-l+1)
                 edgecase3: what if l==0 and r==n-1
                 edgecase3.1: 6,5,4,3,2,1 a[0]<a[n-1], so i must remove i=1 to n-1
                 Edgecase3.2: 6,5,13,11 , we can remove all from i=1 to n-2
