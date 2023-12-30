@@ -20,6 +20,8 @@ class ListNode:
         self.val = x
         self.next = None
 
+    def __repr__(self,):
+        return f"Linked List Node with Value {self.val}"
 
 def has_cycle(head: ListNode) -> bool:
     """
