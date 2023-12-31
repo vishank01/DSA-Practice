@@ -1,4 +1,5 @@
 """
+https://www.designgurus.io/viewer/document/grokking-the-coding-interview/63ddae8dff57d05f33ad0bc7
 https://leetcode.com/problems/shortest-subarray-to-be-removed-to-make-array-sorted/description/
 
 Shortest Subarray to be Removed to Make Array Sorted
@@ -79,8 +80,8 @@ def find_len_of_shortest_subarray(nums:list[int])->int:
     return to_remove
     
 if __name__=="__main__":
-    # print(find_len_of_shortest_subarray(nums = [1,2,3]))#0
-    # print(find_len_of_shortest_subarray(nums = [2,1]))#0
+    print(find_len_of_shortest_subarray(nums = [1,2,3]))#0
+    print(find_len_of_shortest_subarray(nums = [2,1]))#0
     print(find_len_of_shortest_subarray(nums = [2,2,2,1,1,1]))#3
     # print(find_len_of_shortest_subarray(nums = [1,2,3,10,4,2,3,5]))#3
     # print(find_len_of_shortest_subarray(nums = [5,4,3,2,1]))#4

@@ -47,7 +47,6 @@ def sort_colors(nums:list[int])->list[int]:
             #decrement high only, after the swap the number(worst case 0 gets swapped with i and high)
             #so if i is incremented, 0 will be in the middle of low and high so i should not be incremented
             high-=1
-            i+=1
         else:
             i+=1
     return nums
