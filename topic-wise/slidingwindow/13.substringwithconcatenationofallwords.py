@@ -39,7 +39,7 @@ def words_concatenation(s:str,words:list[str])->list[int]:
     words_dict:dict[str,int] = {}
     words_seen :dict[str,int] = {}
     for word in words: words_dict[word] = words_dict.get(word,0)+1
-    #all words are of equal le  ngth so words[0] is considered for total length
+    #all words are of equal length so words[0] is considered for total length
     len_s,words_count,word_len = len(s),len(words),len(words[0])
     #max value of window_start will be len(s)-total words count
     for window_start in range((len_s-words_count*word_len)+1):
