@@ -24,6 +24,24 @@ Constraints:
     0 <= starti <= endi <= 104
 """
 
+def merge_intervals_new(intervals:list[list[int]])->list[list[int]]:
+    #own logic
+    i=0
+    output = []
+    n = len(intervals)
+    intervals.sort(key=lambda x:x[0])
+    while i<n:
+        j=i+1
+        start_interval = intervals[i]
+        while j<n and intervals[j][0]<=start_interval[1]:
+            if start_interval[1]<intervals[j][1]:
+                start_interval = [start_interval[0],intervals[j][1]]
+            j+=1
+        output.append(start_interval)
+        i=j
+    return output
+            
+
 def merge_intervals(intervals: list[list[int]]) -> list[list[int]]:
     n = len(intervals)
     if n<=1: return intervals
@@ -114,4 +132,5 @@ class MergeIntervalsUsingIntervalTree:
     
 if __name__=="__main__":
     print(merge_intervals([[1,3],[2,6],[8,10],[15,18]]))
+    print(merge_intervals_new([[1,3],[2,6],[8,10],[15,18]]))
     print(MergeIntervalsUsingIntervalTree().merge([[1,3],[2,6],[8,10],[15,18]]))
