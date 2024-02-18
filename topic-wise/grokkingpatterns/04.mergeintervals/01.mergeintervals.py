@@ -34,8 +34,7 @@ def merge_intervals_new(intervals:list[list[int]])->list[list[int]]:
         j=i+1
         start_interval = intervals[i]
         while j<n and intervals[j][0]<=start_interval[1]:
-            if start_interval[1]<intervals[j][1]:
-                start_interval = [start_interval[0],intervals[j][1]]
+            start_interval[1] = max(intervals[j][1],start_interval[1])
             j+=1
         output.append(start_interval)
         i=j
