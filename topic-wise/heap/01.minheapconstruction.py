@@ -5,7 +5,7 @@ Problem Statement:
         output = [6, 7, 8, 24, 8, 24, 24, 391, 76, 56, 12, 41, 48, 87]
     
 Parent Child Relationship:
-    parent child relationship for parent i is child1 = 2*i and child2 = 2*i+1
+    parent child relationship for parent i is child1 = 2*i+1 and child2 = 2*i+2
     so given any child, parent can be obtained by (child_idx-1)//2
     last child is n-1 so n-1=2*i+1
     => n = 2*i+2

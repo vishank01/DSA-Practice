@@ -65,12 +65,26 @@ def find_missing_number_0_n(nums: list[int]) -> int:
     n = len(nums)
     while i<n:
         correct_idx = nums[i]
-        if correct_idx<n and correct_idx!=i:
+        if correct_idx<n and nums[correct_idx]!=nums[i]:
             nums[correct_idx],nums[i]=nums[i],nums[correct_idx]
         else: i+=1
     for i in range(n):
         if nums[i]!=i: return i
     return i+1
+
+def find_missing_number_0_n_xor(nums: list[int]) -> int:
+    """
+    >>> find_missing_number_0_n_xor([3,0,1])
+    2
+    >>> find_missing_number_0_n_xor([9,6,4,2,3,5,7,0,1])
+    8
+    >>> find_missing_number_0_n_xor([0,1])
+    2
+    """
+    xor = 0
+    n = len(nums)
+    for i in range(n): xor^=i^nums[i]
+    return xor^n
 
 def find_missing_number_1_n(nums:list[int])->int:
     """
@@ -85,7 +99,20 @@ def find_missing_number_1_n(nums:list[int])->int:
             nums[correct_idx],nums[i]=nums[i],nums[correct_idx]
         else: i+=1
     for i in range(n):
-        if nums[i]!=i+1: return i+1
+        if nums[i]-1!=i: return i+1
+
+def find_all_missing_numbers(nums:list[int])->list[int]:
+    i=0
+    n = len(nums)
+    while i<n:
+        correct_idx = nums[i]
+        if correct_idx<n and nums[correct_idx]!=nums[i]:
+            nums[correct_idx],nums[i]=nums[i],nums[correct_idx]
+        else: i+=1
+    res = []
+    for i in range(n):
+        if nums[i]!=i+1: res.append(i)
+    return res
 
 if __name__=="__main__":
     import doctest
