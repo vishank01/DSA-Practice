@@ -51,13 +51,14 @@ Cyclic Sort Theory:
         This way we will go through all numbers and place them in their correct indices, hence, sorting the whole array.
 """
 
-def find_missing_number(nums: list[int]) -> int:
+def find_missing_number_0_n(nums: list[int]) -> int:
     """
-    >>> find_missing_number([3,0,1])
+        finds missing number from given nums which are in range [0,N] so totally there will be N+1 elements
+    >>> find_missing_number_0_n([3,0,1])
     2
-    >>> find_missing_number([9,6,4,2,3,5,7,0,1])
+    >>> find_missing_number_0_n([9,6,4,2,3,5,7,0,1])
     8
-    >>> find_missing_number([0,1])
+    >>> find_missing_number_0_n([0,1])
     2
     """
     i=0
@@ -70,6 +71,21 @@ def find_missing_number(nums: list[int]) -> int:
     for i in range(n):
         if nums[i]!=i: return i
     return i+1
+
+def find_missing_number_1_n(nums:list[int])->int:
+    """
+    >>> find_missing_number_1_n([1, 5, 4, 2])
+    3
+    """
+    i=0
+    n = len(nums)
+    while i<n:
+        correct_idx = nums[i]-1
+        if correct_idx<n and nums[correct_idx]!=nums[i]:
+            nums[correct_idx],nums[i]=nums[i],nums[correct_idx]
+        else: i+=1
+    for i in range(n):
+        if nums[i]!=i+1: return i+1
 
 if __name__=="__main__":
     import doctest
