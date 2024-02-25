@@ -13,9 +13,11 @@ def print_1_n(n:int):
     if n==0: return
     print_1_n(n-1)
     print(n,end="")
+    #tail recursion
 
 def print_n_1(n:int):
     if n==0: return
+    #head recursion
     print(n,end="")
     print_n_1(n-1)
 
@@ -57,6 +59,7 @@ def reverse_given_array(array:list[int]):
     def reverse_array_using_divide_and_conquer(array:list[int],low:int,high:int):
         if low>=high: return [array[low]]
         mid = (low+high)//2
+        #reverse both left and right arrays and then make it right+left
         left_array = reverse_array_using_divide_and_conquer(array,low,mid)
         right_array = reverse_array_using_divide_and_conquer(array,mid+1,high)
         return right_array+left_array
