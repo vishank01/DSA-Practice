@@ -28,7 +28,9 @@ class RecursionUtil:
     
     def gcd_decrease_and_conquer(self,a:int,b:int)->int:
         """
-            Proof that GCD(A,B)=GCD(A,A-B)
+            The idea of this algorithm is, the GCD of two numbers doesn't change if the smaller number is subtracted from the bigger number.
+
+            Proof that GCD(A,B)=GCD(A-B,B) if A>B else GCD(A,B) = GCD(A,B-A)
             This is one of the best problems to learn problem-solving using Recursion (Decrease and Conquer Strategy)
 
             Note: 
@@ -67,20 +69,20 @@ class RecursionUtil:
 class ReverseUsingRecursion:
     def __init__(self):
         print("\n\n"+"*"*10+"ReverseUsingRecursion"+"*"*10+"\n")
-        print(f"Reverse of string hello using recursion is {self.reverse_string('hello')}")
+        print(f"Reverse of string hello using recursion is {self.reverse_string_recursion('hello')}")
         print(f"Reverse of string hello world! using divide and conquer is {self.reverse_string_divide_and_conquer('hello world!')}")
-        print(f"Reverse of an array [1,2,3,4,5] using swap+recursion is {self.reverse_array_using_swap([1,2,3,4,5])}")
+        print(f"Reverse of an array [1,2,3,4,5] using swap+recursion is {self.reverse_array_using_swap_recursion([1,2,3,4,5])}")
         print("\n\n"+"*"*20+"\n")
 
-    def reverse_string(self,string:str)->str:
+    def reverse_string_recursion(self,string:str)->str:
         
         def helper(string:str,n:int)->str:
             if n==0: return string[0]
             return string[n]+helper(string,n-1)
         
         return helper(string,len(string)-1)
-
-    def reverse_array_using_swap(self,array:list[Any])->list[Any]:
+    
+    def reverse_array_using_swap_recursion(self,array:list[Any])->list[Any]:
         
         def helper(array:list[Any],low:int,high:int)->list[Any]:
             if low>=high: return array
@@ -92,7 +94,7 @@ class ReverseUsingRecursion:
 
     def reverse_string_divide_and_conquer(self,string:str)->str:
         def helper(string:str,low:int,high:int)->str:
-            if low==high: return string[low]
+            if low>=high: return string[low]
 
             mid = (low+high)//2
 
