@@ -36,8 +36,9 @@ class Solution:
         Return only unique subsets and they can be in any order.
     """
     def unique_subsets_with_duplicated_numbers(self,nums):
-        # write the code  logic here !!!
         ans = []
+        # array is already sorted so sorting is not done again
+        # nums.sort()
         self.helper(nums,0,len(nums),ans,ds=[]) 
         return ans
 
