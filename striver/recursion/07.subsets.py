@@ -30,6 +30,11 @@ def subsets_with_all_sums(nums:list[int]):
     return ans
 
 class Solution:
+    """
+        Subset - II | Print all the Unique Subsets
+        Problem Statement: Given an array of integers that may contain duplicates the task is to return all possible subsets.
+        Return only unique subsets and they can be in any order.
+    """
     def unique_subsets_with_duplicated_numbers(self,nums):
         # write the code  logic here !!!
         ans = []
@@ -46,4 +51,4 @@ class Solution:
 
 if __name__=="__main__":
     print(subsets_with_all_sums([1,2,3]))
-    print(Solution().unique_subsets_with_duplicated_numbers([1,2,3]))
+    print(Solution().unique_subsets_with_duplicated_numbers([1,1,2,3]))
