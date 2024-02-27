@@ -31,20 +31,29 @@ def subsets_with_all_sums(nums:list[int]):
 
 class Solution:
     """
+        https://youtu.be/RIn3gOkbhQE?list=PLgUwDviBIf0rGlzIn_7rsaR2FQ5e6ZOL9
+        https://takeuforward.org/data-structure/subset-ii-print-all-the-unique-subsets/
         Subset - II | Print all the Unique Subsets
         Problem Statement: Given an array of integers that may contain duplicates the task is to return all possible subsets.
         Return only unique subsets and they can be in any order.
+
+        Approach:
+            Brute-Force:
+                Generate all combinations using pick/non-pick technique
+                use sets() to avoid duplicate outputs and then convert sets to lists
+        
     """
     def unique_subsets_with_duplicated_numbers(self,nums):
         ans = []
-        # array is already sorted so sorting is not done again
-        # nums.sort()
+        nums.sort()
         self.helper(nums,0,len(nums),ans,ds=[]) 
         return ans
 
     def helper(self,nums,idx,n,ans,ds):
         ans.append(ds.copy())
+        #this loop provides all combinations starting with nums[idx] like (1,2,3),(1,2),(1,3)
         for i in range(idx,n):
+            #this will skip considering same element in same loop to avoid duplicates 
             if i>idx and nums[i-1]==nums[i]: continue
             ds.append(nums[i])
             self.helper(nums,i+1,n,ans,ds)
