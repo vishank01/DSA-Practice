@@ -70,6 +70,9 @@ class SolutionUsingSubSets:
         for i in range(idx,n):
             #skip elements starting with same element again to avoid duplicates
             #if i>idx then i-1 will start from idx otherwise it may exclude some data
+            #always consider first occurance of element and ignore second occurance
+            #first occurance might start from i=idx(when you are at i then i-1th element is already processed and considered)
+            #if i<idx then i-1 may be out of bounds
             if i>idx and candidates[i-1]==candidates[i]: continue
             #array is sorted so next elements will also be greater than target
             if candidates[i]>target: break
