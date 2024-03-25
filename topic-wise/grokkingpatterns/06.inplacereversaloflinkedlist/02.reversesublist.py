@@ -36,9 +36,11 @@ class Solution:
             i+=1
 
         if last_node_of_first_part:
+            #prev_node is now the first node of the second part
             last_node_of_first_part.next = prev_node
         else:
-            #case where linkedlist length is 1 and left=right=1
+            #case where linkedlist left==1 (in this case reversed head should be updated as head)
+            #this means left==1 so we are changing the first node(head) of the LL
             head = prev_node
         last_node_of_second_part.next = curr_node
         return head
