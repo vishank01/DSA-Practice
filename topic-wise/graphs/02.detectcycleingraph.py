@@ -145,6 +145,51 @@ class DirectedGraphCycleDetector:
             # The node needs to be popped from recursion_stack before function ends
             recursion_stack[start_vertex]=False
 
+class DirectedGraphCycleDetectorSpaceOptimized:
+    def __init__(self,graphs:list[DirectedGraph])->None:
+        self.graphs = graphs
+    
+    def detect_cycle_in_graphs(self)->list[bool]:
+        """ Fuction to Detect Cycles in Graph using DFS
+        Returns:
+            list[bool] : list of results for given input graphs
+
+        >>> directed_graph.detect_cycle_in_graphs()
+        [True]
+        """
+        results = []
+        for graph in self.graphs:
+            result = False
+            num_vertices = len(graph.graph)
+            visited = [0 for _ in range(num_vertices)]
+            for vertex in range(num_vertices):
+                if visited[vertex]==0:
+                    if self.detect_cycle_in_graph_helper(graph.graph,num_vertices,vertex,visited):
+                        result = True
+            results.append(result)
+        return results
+
+    def detect_cycle_in_graph_helper(self,graph:DirectedGraph,num_vertices:int,start_vertex:int,visited:list[bool])->bool:
+        """ Helper function to Detect Cycles in Graph using DFS
+
+        Args:
+            start_vertex (int): source vertex to start DFS from
+            visited (list[bool]): list of visited nodes
+            State 0 is not visited, 1 is visited and processed, 2 is under process
+
+        Returns:
+            bool : True/False 
+        """
+        if visited[start_vertex]==2: return True
+        visited[start_vertex]=2
+        for i in range(num_vertices):
+            #check if i is neighbour for start_vertex
+            if graph[start_vertex][i]==1:
+                if visited[i]!=1:
+                    if self.detect_cycle_in_graph_helper(graph,num_vertices,i,visited):
+                        return True
+        visited[start_vertex]=1
+
 class UnDirectedGraphCycleDetector:
     def __init__(self,graphs:list[UnDirectedGraph])->None:
         self.graphs = graphs
@@ -259,4 +304,5 @@ def create_undirected_graphs()->list[UnDirectedGraph]:
 if __name__=="__main__":
     # import doctest;doctest.testmod(extraglobs={'directed_graph': DirectedGraphCycleDetector(create_directed_graphs())})
     print(DirectedGraphCycleDetector(create_directed_graphs()).detect_cycle_in_graphs())
+    print(DirectedGraphCycleDetectorSpaceOptimized(create_directed_graphs()).detect_cycle_in_graphs())
     print(UnDirectedGraphCycleDetector(create_undirected_graphs()).detect_cycle_in_graphs())

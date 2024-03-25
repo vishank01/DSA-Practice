@@ -2,8 +2,8 @@ from collections import deque
 from collections import defaultdict
 
 class Graph:
-    def __init__(self,vertices:int)->None:
-        self.vertices = vertices
+    def __init__(self,no_of_vertices:int)->None:
+        self.no_of_vertices = no_of_vertices
         self.graph = defaultdict(list)
 
     def add_edge(self,u:int,v:int):
@@ -15,7 +15,7 @@ class Graph:
         in this way all the children aren't printed first before it's corresponding parent is printed(ensuring u is before v)
         """
         stack = []
-        visited = [False for _ in range(self.vertices)]
+        visited = [False for _ in range(self.no_of_vertices)]
 
         def helper(vertex:int,visited:list[bool],stack:list[int]):
             visited[vertex]=True
@@ -24,7 +24,7 @@ class Graph:
                     return helper(adjacent_node,visited,stack)
             stack.append(vertex)
 
-        for i in range(self.vertices):
+        for i in range(self.no_of_vertices):
             if visited[i]==False:
                 helper(i,visited,stack)
         # while len(stack)>0:
@@ -33,13 +33,13 @@ class Graph:
 
     def topological_sort_bfs(self):
         queue = deque()
-        in_degrees = [0 for _ in range(self.vertices)]
+        in_degrees = [0 for _ in range(self.no_of_vertices)]
 
         for node in self.graph:
             for adjacent_node in self.graph[node]:
                 in_degrees[adjacent_node]+=1
 
-        for i in range(self.vertices):
+        for i in range(self.no_of_vertices):
             if in_degrees[i]==0:
                 queue.append(i)
 
@@ -55,7 +55,7 @@ class Graph:
                 if in_degrees[adjacent_node]==0:
                     queue.append(adjacent_node)
             vertices_cnt+=1
-        if vertices_cnt!=self.vertices:
+        if vertices_cnt!=self.no_of_vertices:
             print("Cycles are present in the graph hence cannot be sorted!")
         else:
             print(output)
